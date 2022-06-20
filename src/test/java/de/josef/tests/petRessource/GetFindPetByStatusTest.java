@@ -119,62 +119,6 @@ public class GetFindPetByStatusTest {
 
     }
 
-    @Test
-    public void findPet3(){
-
-        pet.setId(DefaultTestData.validId3);
-
-        Response response = petRequestHelper.getPetEntry(pet.getId());
-        createdPet = response.body().as(Pet.class);
-
-        assertThat(createdPet.getId(),equalTo(pet.getId()));
-
-        response.then()
-                .assertThat()
-                .statusCode(200)
-                .body("status", is("available"))
-                .body("id", equalTo(pet.getId()))
-                .body("tags", is(nullValue()));
-
-    }
-
-    @Test
-    public void findPet4(){
-
-        pet.setId(DefaultTestData.validId4);
-
-        Response response = petRequestHelper.getPetEntry(pet.getId());
-        createdPet = response.body().as(Pet.class);
-
-        assertThat(createdPet.getId(),equalTo(pet.getId()));
-
-        response.then()
-                .assertThat()
-                .statusCode(200)
-                .body("status", is("sold"))
-                .body("id", equalTo(pet.getId()))
-                .body("name",containsString("New Pet Only Name Field And ID And Status"))
-                .body("tags", is(nullValue()));
-
-    }
-
-    @Test
-    public void findNotExistingPet(){
-
-        pet.setId(DefaultTestData.invalidId1);
-
-        Response response = petRequestHelper.getPetEntry(pet.getId());
-        createdPet = response.body().as(Pet.class);
-
-        response.then()
-                .assertThat()
-                .statusCode(404)
-                .body("code", is(1))
-                .body("type", is("error"))
-                .body("message",containsString("Pet not found"))
-                .body("id", is(nullValue()));
-
-    }
 
     @AfterMethod
     public void teardown(){
